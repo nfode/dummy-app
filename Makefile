@@ -2,8 +2,8 @@ gen:
 	go generate ./...
 
 build: gen
-	go build ./cmd/dummy_app
+	go build -o bin/dummy_app ./cmd/dummy_app
 run: build
-	./dummy_app
+	./bin/dummy_app
 
 
