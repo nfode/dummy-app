@@ -2,6 +2,7 @@ package store_api
 
 import (
 	"context"
+	"github.com/labstack/echo/v4"
 	api "github.com/nfode/dummy-app/internal/apis/store/internal/gen"
 )
 
@@ -26,7 +27,10 @@ func (server) PutOrderId(ctx context.Context, request api.PutOrderIdRequestObjec
 
 var _ api.StrictServerInterface = (*server)(nil)
 
-func RegisterStoreAPI(e api.EchoRouter) {
+type StoreAPI struct {
+}
+
+func (StoreAPI) RegisterAPI(e *echo.Echo, baseUrl string) {
 	handler := api.NewStrictHandler(server{}, nil)
-	api.RegisterHandlers(e, handler)
+	api.RegisterHandlersWithBaseURL(e, handler, baseUrl)
 }
