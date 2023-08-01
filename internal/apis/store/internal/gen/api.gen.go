@@ -13,6 +13,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+const (
+	BearerAuthScopes = "bearerAuth.Scopes"
+)
+
 // Defines values for OrderItem.
 const (
 	TeaTableGreen OrderItem = "Tea Table Green"
@@ -58,6 +62,8 @@ func (w *ServerInterfaceWrapper) GetOrderId(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
 	}
 
+	ctx.Set(BearerAuthScopes, []string{"read"})
+
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.GetOrderId(ctx, id)
 	return err
@@ -73,6 +79,8 @@ func (w *ServerInterfaceWrapper) PutOrderId(ctx echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
 	}
+
+	ctx.Set(BearerAuthScopes, []string{"read"})
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PutOrderId(ctx, id)

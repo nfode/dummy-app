@@ -3,7 +3,14 @@ info:
   title: Title
   description: Title
   version: 1.0.0
+security:
+  - bearerAuth: ["read"]
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Order:
       type: object
@@ -20,6 +27,8 @@ components:
 paths:
   "/order/{id}":
     get:
+      security:
+        - bearerAuth: ["read"]
       summary: TEst
       parameters:
         - in: path
